@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hùng Sử Việt - Ngô Quyền</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="data.js"></script> 
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Quicksand:wght@400;500;600&display=swap');
+        
+        /* CSS Dự phòng khi Tailwind không tải được */
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            margin: 0; 
+            background-color: #fdfaf1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            height: -webkit-fill-available;
+            overflow: hidden;
+        }
+        .serif { font-family: 'Cormorant Garamond', serif; }
+
+        /* Sửa lỗi giao diện Mobile bị vỡ trong ảnh của bạn */
+        header {
+            background: white;
+            padding: 10px 20px;
+            border-bottom: 1px solid #8b691433;
+            display: flex;
+            align-items: center;
+            z-index: 50;
+        }
+
+        #chat-box {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
+        }
+
+        footer {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #8b691422;
+        }
+
+        .input-group {
+            display: flex;
+            background: #fff;
+            border: 1px solid #8b691466;
+            border-radius: 15px;
+            padding: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        input {
+            flex: 1;
+            border: none;
+            padding: 12px;
+            outline: none;
+            font-size: 16px; /* Chống zoom trên iPhone */
+        }
+
+        button {
+            background: #3b2f1e;
+            color: #f5f0e1;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Sidebar ẩn trên mobile */
+        @media (max-width: 768px) {
+            aside { display: none; }
+        }
+
+        /* Bubble chat */
+        .msg-hero {
+            align-self: flex-start;
+            background: white;
+            padding: 15px;
+            border-radius: 18px 18px 18px 0;
+            border-left: 4px solid #8b6914;
+            max-width: 85%;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.03);
+        }
+        .msg-user {
+            align-self: flex-end;
+            background: #3b2f1e;
+            color: white;
+            padding: 15px;
+            border-radius: 18px 18px 0 18px;
+            max-width: 85%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="width: 40px; height: 40px; background: #3b2f1e; color: #f5f0e1; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px;" class="serif">NQ</div>
+        <div>
+            <div class="serif" style="font-size: 1.2rem; font-weight: bold;">Ngô Quyền</div>
+            <div style="font-size: 0.7rem; color: #10b981; font-weight: bold; text-transform: uppercase;">● Đang ngự lãm</div>
+        </div>
+    </header>
+
+    <main id="chat-box">
+        <div class="msg-hero">
+            <p>Ta là Tiền Ngô Vương Ngô Quyền. Ngươi có điều chi muốn hỏi về trận Bạch Đằng năm ấy hay về việc định đô tại Cổ Loa?</p>
+            <small style="color: #8b6914; font-weight: bold; font-size: 10px;">HÙNG SỬ VIỆT</small>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="input-group">
+            <input type="text" id="user-input" placeholder="Hỏi Ngài về lịch sử..." onkeypress="if(event.key === 'Enter') sendMessage()">
+            <button onclick="sendMessage()">GỬI</button>
+        </div>
+    </footer>
+
+    <script>
+        function sendMessage() {
+            const inputField = document.getElementById("user-input");
+            const chatBox = document.getElementById("chat-box");
+            const userMsg = inputField.value.trim();
+
+            if (!userMsg) return;
+
+            // Hiển thị tin nhắn Bạn
+            chatBox.insertAdjacentHTML('beforeend', `
+                <div class="msg-user">
+                    <p>${userMsg}</p>
+                    <small style="font-size: 10px; opacity: 0.6; display: block; text-align: right;">BẠN</small>
+                </div>`);
+            
+            inputField.value = "";
+
+            // Xử lý logic từ data.js
+            setTimeout(() => {
+                let response = "Ta chưa rõ ý ngươi. Hãy hỏi ta về trận Bạch Đằng, cọc gỗ hoặc thân thế của ta.";
+                const lowerCaseMsg = userMsg.toLowerCase();
+
+                if (typeof DATABASE_NGO_QUYEN !== 'undefined') {
+                    for (let item of DATABASE_NGO_QUYEN) {
+                        if (item.keywords.some(key => lowerCaseMsg.includes(key))) {
+                            response = item.answer;
+                            break;
+                        }
+                    }
+                }
+
+                chatBox.insertAdjacentHTML('beforeend', `
+                    <div class="msg-hero">
+                        <p style="white-space: pre-wrap;">${response}</p>
+                        <small style="color: #8b6914; font-weight: bold; font-size: 10px;">NGÔ QUYỀN</small>
+                    </div>`);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 500);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
