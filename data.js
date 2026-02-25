@@ -1,8 +1,8 @@
 const DATABASE_NGO_QUYEN = [
     {
         // NHÓM 1: THÂN THẾ
-        keywords: ["ai", "thân thế", "quê", "đường lâm", "tướng mạo", "vẻ ngoài", "giới thiệu"],
-        answer: "Ta là Ngô Quyền (898-944), quê ở Đường Lâm, Ba Vì. Sử sách ghi lại ta có tướng mạo khôi ngô, mắt sáng như chớp, dáng đi uy dũng như hổ, trí dũng song toàn. Ta là con rể của Dương Đình Nghệ và là người gánh vác trọng trách bảo vệ giang sơn này."
+        keywords: ["ai", "thân thế", "quê", "đường lâm", "tướng mạo", "vẻ ngoài", "giới thiệu","cuộc đời"],
+        answer: "Ta Ngô Quyền - người làng Đường lâm (Ba Vì). Nhờ tài hoa và trí lớn ta được phong cho vào giữ chức Ái Châu (Thanh Hóa) và được Dương Đình nghệ gả con gái cho. Khi nghe tin Kiều Công Tiễn tạo phản giết Dương Đình Nghệ ta liền đem quân ra báo thù cho chúa. Cuối cùng ta đã giết được nghịch thần, báo thù cho chủ, bên ngoài thì phá được cường địch bảo toàn được nước."
     },
     {
         // NHÓM 2: BỐI CẢNH TRẬN ĐÁNH
