@@ -9,160 +9,151 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Quicksand:wght@400;500;600&display=swap');
         
-        /* CSS Dự phòng khi Tailwind không tải được */
-        body { 
-            font-family: 'Quicksand', sans-serif; 
-            margin: 0; 
-            background-color: #fdfaf1;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            height: -webkit-fill-available;
-            overflow: hidden;
-        }
+        body { font-family: 'Quicksand', sans-serif; background-color: #f4f1ea; margin: 0; display: flex; height: 100vh; overflow: hidden; }
         .serif { font-family: 'Cormorant Garamond', serif; }
 
-        /* Sửa lỗi giao diện Mobile bị vỡ trong ảnh của bạn */
-        header {
-            background: white;
-            padding: 10px 20px;
-            border-bottom: 1px solid #8b691433;
-            display: flex;
-            align-items: center;
-            z-index: 50;
+        /* GIAO DIỆN 3 CỘT XỊN XÒ CHO MÁY TÍNH */
+        .app-container { display: grid; grid-template-columns: 260px 1fr 320px; width: 100%; height: 100vh; }
+
+        /* Tối ưu Mobile: Ẩn sidebar trái/phải */
+        @media (max-width: 1024px) {
+            .app-container { grid-template-columns: 1fr; }
+            .sidebar-left, .sidebar-right { display: none; }
         }
 
+        /* KHU VỰC CHAT VÀ THANH CUỘN */
         #chat-box {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            flex: 1; overflow-y: auto; scroll-behavior: smooth; padding: 25px;
+            display: flex; flex-direction: column; gap: 20px;
             background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
         }
+        /* Làm đẹp thanh cuộn */
+        #chat-box::-webkit-scrollbar { width: 6px; }
+        #chat-box::-webkit-scrollbar-track { background: transparent; }
+        #chat-box::-webkit-scrollbar-thumb { background: #8b6914; border-radius: 10px; }
 
-        footer {
-            padding: 15px;
-            background: white;
-            border-top: 1px solid #8b691422;
-        }
+        .sidebar-left, .sidebar-right { background: #2d2417; color: #f5f0e1; padding: 25px; border-left: 1px solid #8b691444; border-right: 1px solid #8b691444; overflow-y: auto; }
 
-        .input-group {
-            display: flex;
-            background: #fff;
-            border: 1px solid #8b691466;
-            border-radius: 15px;
-            padding: 5px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
+        /* BONG BÓNG CHAT */
+        .msg-hero { align-self: flex-start; background: white; padding: 18px; border-radius: 20px 20px 20px 0; border-left: 5px solid #8b6914; max-width: 85%; box-shadow: 5px 5px 15px rgba(0,0,0,0.05); }
+        .msg-user { align-self: flex-end; background: #3b2f1e; color: #f5f0e1; padding: 15px 20px; border-radius: 20px 20px 0 20px; max-width: 80%; }
 
-        input {
-            flex: 1;
-            border: none;
-            padding: 12px;
-            outline: none;
-            font-size: 16px; /* Chống zoom trên iPhone */
-        }
+        /* HIỂN THỊ BẢN ĐỒ */
+        .battle-map { width: 100%; border-radius: 10px; margin-top: 15px; border: 2px solid #8b6914; transition: transform 0.3s; cursor: zoom-in; }
+        .battle-map:hover { transform: scale(1.02); }
 
-        button {
-            background: #3b2f1e;
-            color: #f5f0e1;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* Sidebar ẩn trên mobile */
-        @media (max-width: 768px) {
-            aside { display: none; }
-        }
-
-        /* Bubble chat */
-        .msg-hero {
-            align-self: flex-start;
-            background: white;
-            padding: 15px;
-            border-radius: 18px 18px 18px 0;
-            border-left: 4px solid #8b6914;
-            max-width: 85%;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.03);
-        }
-        .msg-user {
-            align-self: flex-end;
-            background: #3b2f1e;
-            color: white;
-            padding: 15px;
-            border-radius: 18px 18px 0 18px;
-            max-width: 85%;
-        }
+        /* AVATAR KHUNG TRÒN */
+        .avatar-frame { width: 160px; height: 160px; border: 3px solid #8b6914; border-radius: 50%; margin: 0 auto 15px; overflow: hidden; background: #fff; box-shadow: 0 0 25px rgba(139, 105, 20, 0.4); }
+        .avatar-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div style="width: 40px; height: 40px; background: #3b2f1e; color: #f5f0e1; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px;" class="serif">NQ</div>
-        <div>
-            <div class="serif" style="font-size: 1.2rem; font-weight: bold;">Ngô Quyền</div>
-            <div style="font-size: 0.7rem; color: #10b981; font-weight: bold; text-transform: uppercase;">● Đang ngự lãm</div>
-        </div>
-    </header>
+    <div class="app-container">
+        <aside class="sidebar-left">
+            <h1 class="serif text-3xl font-bold border-b border-[#8b6914] pb-4 mb-6 text-[#8b6914]">Hùng Sử Việt</h1>
+            <div class="p-4 bg-[#8b6914] rounded-xl text-white shadow-lg border border-[#f5f0e1]/20">
+                <p class="font-bold text-lg">Ngô Quyền</p>
+                <p class="text-xs opacity-80 uppercase tracking-tighter font-semibold">Vị tổ trung hưng</p>
+            </div>
+            <div class="mt-10 opacity-30 text-[11px] text-center border-t border-white/10 pt-4">© 2024 Dự án Sử Việt</div>
+        </aside>
 
-    <main id="chat-box">
-        <div class="msg-hero">
-            <p>Ta là Tiền Ngô Vương Ngô Quyền. Ngươi có điều chi muốn hỏi về trận Bạch Đằng năm ấy hay về việc định đô tại Cổ Loa?</p>
-            <small style="color: #8b6914; font-weight: bold; font-size: 10px;">HÙNG SỬ VIỆT</small>
-        </div>
-    </main>
-    
-    <footer>
-        <div class="input-group">
-            <input type="text" id="user-input" placeholder="Hỏi Ngài về lịch sử..." onkeypress="if(event.key === 'Enter') sendMessage()">
-            <button onclick="sendMessage()">GỬI</button>
-        </div>
-    </footer>
+        <section class="flex flex-col bg-[#fdfaf1] relative">
+            <header class="bg-white p-4 border-b flex items-center shadow-sm z-10">
+                <div class="w-11 h-11 rounded-full overflow-hidden border-2 border-[#8b6914]">
+                    <img src="https://i.ibb.co/LhyMmqk/image-6fcefa.jpg" class="w-full h-full object-cover">
+                </div>
+                <div class="ml-3">
+                    <h2 class="serif text-2xl font-bold text-[#3b2f1e]">Ngô Quyền</h2>
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <span class="text-[10px] uppercase font-bold text-gray-400">Đang ngự lãm</span>
+                    </div>
+                </div>
+            </header>
+
+            <main id="chat-box">
+                <div class="msg-hero">
+                    Ta là Tiền Ngô Vương Ngô Quyền. Ngươi muốn tìm hiểu về trận đại thắng trên sông Bạch Đằng năm 938 hay về việc ta đóng đô tại Cổ Loa?
+                </div>
+            </main>
+
+            <footer class="p-4 bg-white border-t shadow-[0_-5px_15px_rgba(0,0,0,0.02)]">
+                <div class="max-w-3xl mx-auto flex gap-2 bg-[#f4f1ea] p-2 rounded-2xl border border-[#8b6914]/20 focus-within:border-[#8b6914] transition-all">
+                    <input type="text" id="user-input" class="flex-1 bg-transparent px-4 py-3 outline-none text-base" placeholder="Hỏi Ngài về diễn biến trận đánh..." onkeypress="if(event.key === 'Enter') sendMessage()">
+                    <button onclick="sendMessage()" class="bg-[#3b2f1e] text-[#f5f0e1] px-8 py-3 rounded-xl font-bold hover:bg-[#8b6914] active:scale-95 transition-all serif tracking-widest">GỬI</button>
+                </div>
+            </footer>
+        </section>
+
+        <aside class="sidebar-right text-center">
+            <div class="avatar-frame">
+                <img src="https://i.ibb.co/LhyMmqk/image-6fcefa.jpg" alt="Chân dung Ngô Quyền">
+            </div>
+            <h3 class="serif text-3xl font-bold text-[#8b6914] mb-1">Ngô Quyền</h3>
+            <p class="text-[10px] text-gray-500 mb-8 uppercase tracking-[0.2em]">898 — 944</p>
+            
+            <div class="text-left space-y-5">
+                <div class="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
+                    <p class="text-[#8b6914] font-bold text-xs uppercase mb-1">📍 Nguyên quán</p>
+                    <p class="text-sm">Đường Lâm, Ba Vì (Hà Nội ngày nay)</p>
+                </div>
+                <div class="bg-white/10 p-4 rounded-xl border border-[#8b6914]/50">
+                    <p class="text-[#8b6914] font-bold text-xs uppercase mb-1">🛡️ Chiến tích lẫy lừng</p>
+                    <p class="text-sm leading-relaxed text-gray-200">Đánh tan quân Nam Hán, kết thúc nghìn năm Bắc thuộc, mở ra thời kỳ độc lập tự chủ cho nước Việt.</p>
+                </div>
+            </div>
+        </aside>
+    </div>
 
     <script>
         function sendMessage() {
-            const inputField = document.getElementById("user-input");
+            const input = document.getElementById("user-input");
             const chatBox = document.getElementById("chat-box");
-            const userMsg = inputField.value.trim();
+            const userText = input.value.trim();
+            if (!userText) return;
 
-            if (!userMsg) return;
+            // 1. Hiện tin nhắn của bạn
+            chatBox.insertAdjacentHTML('beforeend', `<div class="msg-user">${userText}</div>`);
+            input.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Hiển thị tin nhắn Bạn
-            chatBox.insertAdjacentHTML('beforeend', `
-                <div class="msg-user">
-                    <p>${userMsg}</p>
-                    <small style="font-size: 10px; opacity: 0.6; display: block; text-align: right;">BẠN</small>
-                </div>`);
-            
-            inputField.value = "";
-
-            // Xử lý logic từ data.js
+            // 2. Xử lý phản hồi của Ngô Quyền
             setTimeout(() => {
-                let response = "Ta chưa rõ ý ngươi. Hãy hỏi ta về trận Bạch Đằng, cọc gỗ hoặc thân thế của ta.";
-                const lowerCaseMsg = userMsg.toLowerCase();
+                let response = "Ta chưa rõ ý ngươi. Hãy hỏi ta về kế sách cọc gỗ, diễn biến trận đánh hoặc thân thế của ta.";
+                let showMap = false;
+                const lowerText = userText.toLowerCase();
 
+                // Kiểm tra từ khóa để hiện sơ đồ trận đánh
+                const keywordsMap = ["diễn biến", "trận đánh", "bản đồ", "sơ đồ", "bạch đằng", "đánh như nào"];
+                if (keywordsMap.some(k => lowerText.includes(k))) {
+                    showMap = true;
+                }
+
+                // Tìm trong data.js (nếu có nạp thành công)
                 if (typeof DATABASE_NGO_QUYEN !== 'undefined') {
                     for (let item of DATABASE_NGO_QUYEN) {
-                        if (item.keywords.some(key => lowerCaseMsg.includes(key))) {
+                        if (item.keywords.some(k => lowerText.includes(k))) {
                             response = item.answer;
                             break;
                         }
                     }
                 }
 
-                chatBox.insertAdjacentHTML('beforeend', `
+                const responseHtml = `
                     <div class="msg-hero">
                         <p style="white-space: pre-wrap;">${response}</p>
-                        <small style="color: #8b6914; font-weight: bold; font-size: 10px;">NGÔ QUYỀN</small>
-                    </div>`);
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 500);
-            chatBox.scrollTop = chatBox.scrollHeight;
+                        ${showMap ? `<img src="https://i.ibb.co/680L93h/image-7020d7.jpg" class="battle-map" alt="Sơ đồ trận Bạch Đằng 938">` : ''}
+                        <div class="mt-3 flex items-center gap-2 border-t border-gray-100 pt-2">
+                             <span class="text-[9px] font-bold text-[#8b6914] uppercase tracking-widest opacity-60">Ngô Quyền</span>
+                        </div>
+                    </div>`;
+                
+                chatBox.insertAdjacentHTML('beforeend', responseHtml);
+                // Cuộn xuống bản tin mới nhất
+                chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
+            }, 700);
         }
     </script>
 </body>
