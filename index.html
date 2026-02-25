@@ -8,101 +8,180 @@
     <script src="data.js"></script> 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Quicksand:wght@400;500;600&display=swap');
-        body { font-family: 'Quicksand', sans-serif; background-color: #f4f1ea; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background-color: #f4f1ea; 
+            margin: 0; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            overflow: hidden; /* Chống cuộn toàn trang */
+        }
         .serif { font-family: 'Cormorant Garamond', serif; }
-        .app-container { display: grid; grid-template-columns: 260px 1fr 320px; width: 100%; height: 100vh; }
-        @media (max-width: 1024px) { .app-container { grid-template-columns: 1fr; } .sidebar-left, .sidebar-right { display: none; } }
-        #chat-box { flex: 1; overflow-y: auto; scroll-behavior: smooth; padding: 25px; display: flex; flex-direction: column; gap: 20px; background-image: url('https://www.transparenttextures.com/patterns/parchment.png'); }
-        .sidebar-left, .sidebar-right { background: #2d2417; color: #f5f0e1; padding: 25px; border-left: 1px solid #8b691444; border-right: 1px solid #8b691444; }
-        .msg-hero { align-self: flex-start; background: white; padding: 18px; border-radius: 20px 20px 20px 0; border-left: 5px solid #8b6914; max-width: 85%; box-shadow: 5px 5px 15px rgba(0,0,0,0.05); color: #333; }
-        .msg-user { align-self: flex-end; background: #3b2f1e; color: #f5f0e1; padding: 15px 20px; border-radius: 20px 20px 0 20px; max-width: 80%; }
-        .battle-map { width: 100%; border-radius: 10px; margin-top: 15px; border: 2px solid #8b6914; display: block; }
-        .avatar-frame { width: 150px; height: 150px; border: 3px solid #8b6914; border-radius: 50%; margin: 0 auto 15px; overflow: hidden; background: #fff; }
-        .avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Container chính 3 cột */
+        .app-container { 
+            display: grid; 
+            grid-template-columns: 260px 1fr 300px; 
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Responsive cho mobile */
+        @media (max-width: 1024px) {
+            .app-container { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+        }
+
+        /* Sidebar chung */
+        .sidebar { 
+            background: #2d2417; 
+            color: #f5f0e1; 
+            padding: 25px; 
+            border-right: 1px solid #8b691444;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* KHU VỰC CHAT QUAN TRỌNG */
+        .chat-section {
+            display: flex;
+            flex-direction: column;
+            background-color: #fdfaf1;
+            height: 100%;
+        }
+
+        #chat-box {
+            flex: 1;
+            overflow-y: auto; /* Hiện thanh cuộn khi nội dung dài */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scroll-behavior: smooth;
+        }
+
+        /* Tùy chỉnh thanh cuộn cho đẹp */
+        #chat-box::-webkit-scrollbar { width: 6px; }
+        #chat-box::-webkit-scrollbar-thumb { background: #8b6914; border-radius: 10px; }
+
+        /* Bong bóng chat */
+        .msg { padding: 12px 18px; border-radius: 15px; max-width: 85%; line-height: 1.6; }
+        .msg-hero { 
+            align-self: flex-start; 
+            background: white; 
+            border-left: 4px solid #8b6914;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+        }
+        .msg-user { 
+            align-self: flex-end; 
+            background: #3b2f1e; 
+            color: #f5f0e1; 
+        }
+
+        /* Footer nhập liệu cố định */
+        .chat-footer {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+        }
     </style>
 </head>
 <body>
-    <script>
-        // ẢNH ĐÃ ĐƯỢC NHÚNG TRỰC TIẾP VÀO ĐÂY (DẠNG BASE64)
-        const IMG_AVATAR = "https://i.ibb.co/LhyMmqk/image-6fcefa.jpg"; // Link dự phòng cực bền
-        const IMG_MAP = "https://i.ibb.co/680L93h/image-7020d7.jpg";
-    </script>
 
     <div class="app-container">
-        <aside class="sidebar-left">
-            <h1 class="serif text-3xl font-bold border-b border-[#8b6914] pb-4 mb-6 text-[#8b6914]">Hùng Sử Việt</h1>
-            <div class="p-3 bg-[#8b6914] rounded-lg text-white">
+        <aside class="sidebar">
+            <h1 class="serif text-2xl font-bold text-[#8b6914] mb-6">Hùng Sử Việt</h1>
+            <div class="p-3 bg-[#8b6914] rounded-lg">
                 <p class="font-bold">Ngô Quyền</p>
-                <p class="text-xs opacity-80 uppercase">Vị Tổ Trung Hưng</p>
+                <p class="text-xs opacity-70">Đại thắng Bạch Đằng</p>
             </div>
         </aside>
 
-        <section class="flex flex-col bg-[#fdfaf1] relative">
-            <header class="bg-white p-4 border-b flex items-center shadow-sm">
-                <div class="w-10 h-10 rounded-full overflow-hidden border border-[#8b6914]">
-                    <img id="header-img" src="" class="w-full h-full object-cover">
-                </div>
-                <div class="ml-3">
-                    <h2 class="serif text-xl font-bold">Ngô Quyền</h2>
-                    <small class="text-green-600 font-bold uppercase" style="font-size: 9px;">● Đang ngự lãm</small>
+        <main class="chat-section">
+            <header class="p-4 bg-white border-b flex items-center justify-between shadow-sm">
+                <div>
+                    <h2 class="serif text-xl font-bold text-[#2d2417]">Ngô Quyền</h2>
+                    <span class="text-green-600 text-[10px] font-bold">● ĐANG TRỰC TUYẾN</span>
                 </div>
             </header>
-            <main id="chat-box">
-                <div class="msg-hero">Ta là Tiền Ngô Vương Ngô Quyền. Ngươi muốn tìm hiểu về trận Bạch Đằng lịch sử hay về việc ta đóng đô tại Cổ Loa?</div>
-            </main>
-            <footer class="p-4 bg-white border-t">
-                <div class="max-w-3xl mx-auto flex gap-2 bg-[#f4f1ea] p-2 rounded-2xl border border-[#8b6914]/30">
-                    <input type="text" id="user-input" class="flex-1 bg-transparent px-4 py-2 outline-none" placeholder="Hỏi về diễn biến trận đánh..." onkeypress="if(event.key === 'Enter') sendMessage()">
-                    <button onclick="sendMessage()" class="bg-[#3b2f1e] text-[#f5f0e1] px-6 py-2 rounded-xl font-bold">GỬI</button>
+
+            <div id="chat-box">
+                <div class="msg msg-hero">
+                    Ta là Tiền Ngô Vương Ngô Quyền. Ngươi muốn tìm hiểu về trận Bạch Đằng lịch sử hay về việc ta đóng đô tại Cổ Loa?
+                </div>
+            </div>
+
+            <footer class="chat-footer">
+                <div class="max-w-3xl mx-auto flex gap-2">
+                    <input type="text" id="user-input" 
+                        class="flex-1 bg-gray-100 border border-gray-200 rounded-full px-5 py-3 outline-none focus:border-[#8b6914]" 
+                        placeholder="Nhập câu hỏi của bạn..." 
+                        onkeypress="if(event.key === 'Enter') sendMessage()">
+                    <button onclick="sendMessage()" 
+                        class="bg-[#3b2f1e] text-white px-6 py-3 rounded-full font-bold hover:bg-[#8b6914] transition-all">
+                        GỬI
+                    </button>
                 </div>
             </footer>
-        </section>
+        </main>
 
-        <aside class="sidebar-right text-center">
-            <div class="avatar-frame">
-                <img id="sidebar-img" src="" alt="Ngô Quyền">
-            </div>
-            <h3 class="serif text-2xl font-bold text-[#8b6914]">Ngô Quyền</h3>
-            <p class="text-[10px] text-gray-400 mb-6 uppercase">898 - 944</p>
-            <div class="text-left text-sm space-y-4">
-                <div class="bg-white/5 p-3 rounded-lg border border-white/10"><p class="font-bold text-[#8b6914]">📍 Quê quán:</p><p>Đường Lâm, Hà Nội</p></div>
-                <div class="bg-white/10 p-3 rounded-lg border border-[#8b6914]"><p class="font-bold text-[#8b6914]">🛡️ Chiến tích:</p><p>Đại thắng quân Nam Hán trên sông Bạch Đằng năm 938.</p></div>
+        <aside class="sidebar" style="border-right: none; border-left: 1px solid #8b691444;">
+            <h3 class="serif text-xl font-bold text-[#8b6914] mb-4">Thông tin nhân vật</h3>
+            <div class="space-y-4 text-sm">
+                <div>
+                    <p class="font-bold text-[#8b6914]">📍 Quê quán:</p>
+                    <p>Đường Lâm (Sơn Tây, Hà Nội)</p>
+                </div>
+                <div>
+                    <p class="font-bold text-[#8b6914]">⏳ Năm sinh/mất:</p>
+                    <p>898 - 944</p>
+                </div>
+                <div>
+                    <p class="font-bold text-[#8b6914]">🛡️ Công trạng:</p>
+                    <p>Chấm dứt 1000 năm Bắc thuộc, mở ra kỷ nguyên độc lập tự chủ lâu dài cho dân tộc.</p>
+                </div>
             </div>
         </aside>
     </div>
 
     <script>
-        // Gán ảnh ngay khi load trang
-        document.getElementById('header-img').src = IMG_AVATAR;
-        document.getElementById('sidebar-img').src = IMG_AVATAR;
-
         function sendMessage() {
             const input = document.getElementById("user-input");
             const chatBox = document.getElementById("chat-box");
             const text = input.value.trim();
+            
             if (!text) return;
 
-            chatBox.insertAdjacentHTML('beforeend', `<div class="msg-user">${text}</div>`);
+            // Hiển thị tin nhắn người dùng
+            chatBox.insertAdjacentHTML('beforeend', `<div class="msg msg-user">${text}</div>`);
             input.value = "";
+            
+            // Tự động cuộn xuống
             chatBox.scrollTop = chatBox.scrollHeight;
 
+            // Giả lập phản hồi
             setTimeout(() => {
-                let response = "Ta chưa rõ ý ngươi. Hãy hỏi ta về kế sách cọc gỗ, diễn biến trận đánh hoặc thân thế của ta.";
-                let showMap = false;
-                const lowerText = text.toLowerCase();
+                let response = "Ta đang lắng nghe... Ngươi hãy hỏi rõ hơn về kế sách cọc gỗ hoặc thân thế của ta nhé.";
                 
-                if (lowerText.includes("diễn biến") || lowerText.includes("trận đánh") || lowerText.includes("bản đồ") || lowerText.includes("bạch đằng")) {
-                    showMap = true;
+                if (typeof DATABASE_NGO_QUYEN !== 'undefined') {
+                    const lowerText = text.toLowerCase();
+                    for (let item of DATABASE_NGO_QUYEN) {
+                        if (item.keywords.some(k => lowerText.includes(k))) {
+                            response = item.answer;
+                            break;
+                        }
+                    }
                 }
 
-                const responseHtml = `
-                    <div class="msg-hero">
-                        <p style="white-space: pre-wrap;">${response}</p>
-                        ${showMap ? `<img src="${IMG_MAP}" class="battle-map">` : ''}
-                        <small style="color: #8b6914; font-weight: bold; font-size: 10px; margin-top: 10px; display: block;">NGÔ QUYỀN</small>
-                    </div>`;
+                chatBox.insertAdjacentHTML('beforeend', `
+                    <div class="msg msg-hero">
+                        ${response}
+                    </div>
+                `);
                 
-                chatBox.insertAdjacentHTML('beforeend', responseHtml);
+                // Cuộn xuống sau khi có phản hồi
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 600);
         }
