@@ -8,43 +8,22 @@
     <script src="data.js"></script> 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Quicksand:wght@400;500;600&display=swap');
-        
         body { font-family: 'Quicksand', sans-serif; background-color: #f4f1ea; margin: 0; display: flex; height: 100vh; overflow: hidden; }
         .serif { font-family: 'Cormorant Garamond', serif; }
-
-        /* GIAO DIỆN 3 CỘT CHO MÁY TÍNH */
         .app-container { display: grid; grid-template-columns: 260px 1fr 320px; width: 100%; height: 100vh; }
-
-        @media (max-width: 1024px) {
-            .app-container { grid-template-columns: 1fr; }
-            .sidebar-left, .sidebar-right { display: none; }
-        }
-
-        /* KHU VỰC CHAT VÀ THANH CUỘN */
-        #chat-box {
-            flex: 1; overflow-y: auto; scroll-behavior: smooth; padding: 25px;
-            display: flex; flex-direction: column; gap: 20px;
-            background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
-        }
+        @media (max-width: 1024px) { .app-container { grid-template-columns: 1fr; } .sidebar-left, .sidebar-right { display: none; } }
+        #chat-box { flex: 1; overflow-y: auto; scroll-behavior: smooth; padding: 25px; display: flex; flex-direction: column; gap: 20px; background-image: url('https://www.transparenttextures.com/patterns/parchment.png'); }
         #chat-box::-webkit-scrollbar { width: 6px; }
         #chat-box::-webkit-scrollbar-thumb { background: #8b6914; border-radius: 10px; }
-
         .sidebar-left, .sidebar-right { background: #2d2417; color: #f5f0e1; padding: 25px; border-left: 1px solid #8b691444; border-right: 1px solid #8b691444; }
-
-        /* BONG BÓNG CHAT */
         .msg-hero { align-self: flex-start; background: white; padding: 18px; border-radius: 20px 20px 20px 0; border-left: 5px solid #8b6914; max-width: 85%; box-shadow: 5px 5px 15px rgba(0,0,0,0.05); }
         .msg-user { align-self: flex-end; background: #3b2f1e; color: #f5f0e1; padding: 15px 20px; border-radius: 20px 20px 0 20px; max-width: 80%; }
-
-        /* ẢNH BẢN ĐỒ */
-        .battle-map { width: 100%; border-radius: 10px; margin-top: 15px; border: 2px solid #8b6914; transition: transform 0.3s; }
-        .battle-map:hover { transform: scale(1.02); }
-
+        .battle-map { width: 100%; border-radius: 10px; margin-top: 15px; border: 2px solid #8b6914; }
         .avatar-frame { width: 150px; height: 150px; border: 3px solid #8b6914; border-radius: 50%; margin: 0 auto 15px; overflow: hidden; background: #fff; box-shadow: 0 0 20px rgba(139, 105, 20, 0.4); }
         .avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
-
     <div class="app-container">
         <aside class="sidebar-left">
             <h1 class="serif text-3xl font-bold border-b border-[#8b6914] pb-4 mb-6 text-[#8b6914]">Hùng Sử Việt</h1>
@@ -52,50 +31,38 @@
                 <p class="font-bold">Ngô Quyền</p>
                 <p class="text-xs opacity-80 uppercase font-semibold">Đại thắng Bạch Đằng</p>
             </div>
-            <div class="mt-8 opacity-30 text-xs italic">Các vị anh hùng khác đang được cập nhật...</div>
         </aside>
 
         <section class="flex flex-col bg-[#fdfaf1] relative">
             <header class="bg-white p-4 border-b flex items-center shadow-sm">
                 <div class="w-10 h-10 rounded-full overflow-hidden border border-[#8b6914]">
-                    <img src="https://i.ibb.co/LhyMmqk/image-6fcefa.jpg" class="w-full h-full object-cover">
+                    <img src="https://raw.githubusercontent.com/quynhanhblumoon-bot/hung-su-viet/main/assets/ngo-quyen-portrait.jpg" class="w-full h-full object-cover">
                 </div>
                 <div class="ml-3">
                     <h2 class="serif text-xl font-bold">Ngô Quyền</h2>
                     <small class="text-green-600 font-bold uppercase" style="font-size: 9px;">● Đang trực tuyến</small>
                 </div>
             </header>
-
             <main id="chat-box">
-                <div class="msg-hero">
-                    Ta là Tiền Ngô Vương Ngô Quyền. Ngươi muốn tìm hiểu về trận Bạch Đằng lịch sử hay về việc ta đóng đô tại Cổ Loa?
-                </div>
+                <div class="msg-hero">Ta là Tiền Ngô Vương Ngô Quyền. Ngươi muốn tìm hiểu về trận Bạch Đằng lịch sử hay về việc ta đóng đô tại Cổ Loa?</div>
             </main>
-
             <footer class="p-4 bg-white border-t">
                 <div class="max-w-3xl mx-auto flex gap-2 bg-[#f4f1ea] p-2 rounded-2xl border border-[#8b6914]/30">
                     <input type="text" id="user-input" class="flex-1 bg-transparent px-4 py-2 outline-none" placeholder="Hỏi về diễn biến trận đánh..." onkeypress="if(event.key === 'Enter') sendMessage()">
-                    <button onclick="sendMessage()" class="bg-[#3b2f1e] text-[#f5f0e1] px-6 py-2 rounded-xl font-bold hover:bg-[#8b6914] transition-all">GỬI</button>
+                    <button onclick="sendMessage()" class="bg-[#3b2f1e] text-[#f5f0e1] px-6 py-2 rounded-xl font-bold hover:bg-[#8b6914]">GỬI</button>
                 </div>
             </footer>
         </section>
 
         <aside class="sidebar-right text-center">
             <div class="avatar-frame">
-                <img src="https://i.ibb.co/LhyMmqk/image-6fcefa.jpg" alt="Chân dung Ngô Quyền">
+                <img src="https://raw.githubusercontent.com/quynhanhblumoon-bot/hung-su-viet/main/assets/ngo-quyen-portrait.jpg" alt="Chân dung Ngô Quyền">
             </div>
             <h3 class="serif text-2xl font-bold text-[#8b6914]">Ngô Quyền</h3>
             <p class="text-[10px] text-gray-400 mb-6 uppercase tracking-widest">898 - 944</p>
-            
             <div class="text-left text-sm space-y-4">
-                <div class="bg-white/5 p-3 rounded-lg border border-white/10">
-                    <p class="font-bold text-[#8b6914]">📍 Quê quán:</p>
-                    <p>Đường Lâm (Hà Nội ngày nay)</p>
-                </div>
-                <div class="bg-white/10 p-3 rounded-lg border border-[#8b6914]">
-                    <p class="font-bold text-[#8b6914]">🛡️ Chiến tích:</p>
-                    <p>Kết thúc nghìn năm Bắc thuộc bằng trận Bạch Đằng 938.</p>
-                </div>
+                <div class="bg-white/5 p-3 rounded-lg border border-white/10"><p class="font-bold text-[#8b6914]">📍 Quê quán:</p><p>Đường Lâm (Hà Nội ngày nay)</p></div>
+                <div class="bg-white/10 p-3 rounded-lg border border-[#8b6914]"><p class="font-bold text-[#8b6914]">🛡️ Chiến tích:</p><p>Kết thúc nghìn năm Bắc thuộc bằng trận Bạch Đằng 938.</p></div>
             </div>
         </aside>
     </div>
@@ -106,36 +73,20 @@
             const chatBox = document.getElementById("chat-box");
             const text = input.value.trim();
             if (!text) return;
-
             chatBox.insertAdjacentHTML('beforeend', `<div class="msg-user">${text}</div>`);
             input.value = "";
             chatBox.scrollTop = chatBox.scrollHeight;
-
             setTimeout(() => {
                 let response = "Ta chưa rõ ý ngươi. Hãy hỏi ta về kế sách cọc gỗ, diễn biến trận đánh hoặc thân thế của ta.";
                 let showMap = false;
                 const lowerText = text.toLowerCase();
-
-                if (lowerText.includes("diễn biến") || lowerText.includes("trận đánh") || lowerText.includes("bản đồ") || lowerText.includes("bạch đằng")) {
-                    showMap = true;
-                }
-
+                if (lowerText.includes("diễn biến") || lowerText.includes("trận đánh") || lowerText.includes("bạch đằng")) showMap = true;
                 if (typeof DATABASE_NGO_QUYEN !== 'undefined') {
                     for (let item of DATABASE_NGO_QUYEN) {
-                        if (item.keywords.some(k => lowerText.includes(k))) {
-                            response = item.answer;
-                            break;
-                        }
+                        if (item.keywords.some(k => lowerText.includes(k))) { response = item.answer; break; }
                     }
                 }
-
-                const responseHtml = `
-                    <div class="msg-hero">
-                        <p style="white-space: pre-wrap;">${response}</p>
-                        ${showMap ? `<img src="https://i.ibb.co/680L93h/image-7020d7.jpg" class="battle-map" alt="Sơ đồ trận Bạch Đằng">` : ''}
-                        <small style="color: #8b6914; font-weight: bold; font-size: 10px; margin-top: 10px; display: block;">NGÔ QUYỀN</small>
-                    </div>`;
-                
+                const responseHtml = `<div class="msg-hero"><p style="white-space: pre-wrap;">${response}</p>${showMap ? `<img src="https://raw.githubusercontent.com/quynhanhblumoon-bot/hung-su-viet/main/assets/bach-dang-map.jpg" class="battle-map" alt="Sơ đồ trận Bạch Đằng">` : ''}<small style="color: #8b6914; font-weight: bold; font-size: 10px; margin-top: 10px; display: block;">NGÔ QUYỀN</small></div>`;
                 chatBox.insertAdjacentHTML('beforeend', responseHtml);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 600);
@@ -143,4 +94,3 @@
     </script>
 </body>
 </html>
-
