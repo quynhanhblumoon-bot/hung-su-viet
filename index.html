@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hùng Sử Việt - Ngô Quyền</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="data.js"></script> 
@@ -16,9 +16,9 @@
         #chat-box::-webkit-scrollbar { width: 6px; }
         #chat-box::-webkit-scrollbar-thumb { background: #8b6914; border-radius: 10px; }
         .sidebar-left, .sidebar-right { background: #2d2417; color: #f5f0e1; padding: 25px; border-left: 1px solid #8b691444; border-right: 1px solid #8b691444; }
-        .msg-hero { align-self: flex-start; background: white; padding: 18px; border-radius: 20px 20px 20px 0; border-left: 5px solid #8b6914; max-width: 85%; box-shadow: 5px 5px 15px rgba(0,0,0,0.05); }
+        .msg-hero { align-self: flex-start; background: white; padding: 18px; border-radius: 20px 20px 20px 0; border-left: 5px solid #8b6914; max-width: 85%; box-shadow: 5px 5px 15px rgba(0,0,0,0.05); color: #333; }
         .msg-user { align-self: flex-end; background: #3b2f1e; color: #f5f0e1; padding: 15px 20px; border-radius: 20px 20px 0 20px; max-width: 80%; }
-        .battle-map { width: 100%; border-radius: 10px; margin-top: 15px; border: 2px solid #8b6914; }
+        .battle-map { width: 100%; border-radius: 10px; margin-top: 15px; border: 2px solid #8b6914; display: block; }
         .avatar-frame { width: 150px; height: 150px; border: 3px solid #8b6914; border-radius: 50%; margin: 0 auto 15px; overflow: hidden; background: #fff; box-shadow: 0 0 20px rgba(139, 105, 20, 0.4); }
         .avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
     </style>
@@ -35,8 +35,8 @@
 
         <section class="flex flex-col bg-[#fdfaf1] relative">
             <header class="bg-white p-4 border-b flex items-center shadow-sm">
-                <div class="w-10 h-10 rounded-full overflow-hidden border border-[#8b6914]">
-                    <img src="https://raw.githubusercontent.com/quynhanhblumoon-bot/hung-su-viet/main/assets/ngo-quyen-portrait.jpg" class="w-full h-full object-cover">
+                <div class="w-10 h-10 rounded-full overflow-hidden border border-[#8b6914] bg-gray-100">
+                    <img src="https://lh3.googleusercontent.com/d/1X5X8yL8N8O6O2n_7V_N8O8O8O8O8O8O8" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150?text=Avatar'">
                 </div>
                 <div class="ml-3">
                     <h2 class="serif text-xl font-bold">Ngô Quyền</h2>
@@ -56,7 +56,7 @@
 
         <aside class="sidebar-right text-center">
             <div class="avatar-frame">
-                <img src="https://raw.githubusercontent.com/quynhanhblumoon-bot/hung-su-viet/main/assets/ngo-quyen-portrait.jpg" alt="Chân dung Ngô Quyền">
+                <img src="https://lh3.googleusercontent.com/d/1X5X8yL8N8O6O2n_7V_N8O8O8O8O8O8O8" alt="Chân dung Ngô Quyền" onerror="this.src='https://via.placeholder.com/150?text=Ngo+Quyen'">
             </div>
             <h3 class="serif text-2xl font-bold text-[#8b6914]">Ngô Quyền</h3>
             <p class="text-[10px] text-gray-400 mb-6 uppercase tracking-widest">898 - 944</p>
@@ -80,13 +80,13 @@
                 let response = "Ta chưa rõ ý ngươi. Hãy hỏi ta về kế sách cọc gỗ, diễn biến trận đánh hoặc thân thế của ta.";
                 let showMap = false;
                 const lowerText = text.toLowerCase();
-                if (lowerText.includes("diễn biến") || lowerText.includes("trận đánh") || lowerText.includes("bạch đằng")) showMap = true;
+                if (lowerText.includes("diễn biến") || lowerText.includes("trận đánh") || lowerText.includes("bạch đằng") || lowerText.includes("bản đồ")) showMap = true;
                 if (typeof DATABASE_NGO_QUYEN !== 'undefined') {
                     for (let item of DATABASE_NGO_QUYEN) {
                         if (item.keywords.some(k => lowerText.includes(k))) { response = item.answer; break; }
                     }
                 }
-                const responseHtml = `<div class="msg-hero"><p style="white-space: pre-wrap;">${response}</p>${showMap ? `<img src="https://raw.githubusercontent.com/quynhanhblumoon-bot/hung-su-viet/main/assets/bach-dang-map.jpg" class="battle-map" alt="Sơ đồ trận Bạch Đằng">` : ''}<small style="color: #8b6914; font-weight: bold; font-size: 10px; margin-top: 10px; display: block;">NGÔ QUYỀN</small></div>`;
+                const responseHtml = `<div class="msg-hero"><p style="white-space: pre-wrap;">${response}</p>${showMap ? `<img src="https://lh3.googleusercontent.com/d/1vP6E1-vW4Y_f_7o8O9O9O9O9O9O9O9O" class="battle-map" alt="Sơ đồ trận Bạch Đằng">` : ''}<small style="color: #8b6914; font-weight: bold; font-size: 10px; margin-top: 10px; display: block;">NGÔ QUYỀN</small></div>`;
                 chatBox.insertAdjacentHTML('beforeend', responseHtml);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 600);
